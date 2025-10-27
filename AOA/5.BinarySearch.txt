@@ -1,0 +1,38 @@
+/* Program to implement binary search */
+#include <stdio.h>
+
+void main()
+{
+    int a[10], n, i, first, last, middle, search;
+    
+    printf("Enter number of elements\n");
+    scanf("%d", &n);
+    
+    printf("Enter the elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    
+    printf("Enter element to be searched: ");
+    scanf("%d", &search);
+    
+    first = 0;
+    last = n - 1;
+    middle = (first + last) / 2;
+    
+    while (first <= last)
+    {
+        if (a[middle] == search)
+            break;
+        else if (a[middle] < search)
+            first = middle + 1;
+        else
+            last = middle - 1;
+        
+        middle = (first + last) / 2;
+    }
+    
+    if (first > last)
+        printf("\nElement not found");
+    else
+        printf("\nElement found at position %d", middle + 1);
+}
