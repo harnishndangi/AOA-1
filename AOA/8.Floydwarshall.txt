@@ -1,0 +1,62 @@
+#include <stdio.h>
+#define INF 99999
+#define MAX 100  // Maximum number of vertices
+
+// Function to implement the Floyd-Warshall Algorithm
+void floydWarshall(int graph[MAX][MAX], int n) {
+    int dist[MAX][MAX];
+
+    // Initialize the distance matrix with the input graph
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            dist[i][j] = graph[i][j];
+        }
+    }
+
+    // Floyd-Warshall algorithm
+    for (int k = 0; k < n; k++) {
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (dist[i][k] != INF && dist[k][j] != INF &&
+                    dist[i][j] > dist[i][k] + dist[k][j]) {
+                    dist[i][j] = dist[i][k] + dist[k][j];
+                }
+            }
+        }
+    }
+
+    // Print the shortest distance matrix
+    printf("Shortest distances between all pairs of vertices:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (dist[i][j] == INF) {
+                printf("%7s", "INF");
+            } else {
+                printf("%7d", dist[i][j]);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int n;
+    int graph[MAX][MAX];
+
+    // Input the number of vertices
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    // Input the weight matrix
+    printf("Enter the weight matrix (use %d for infinity):\n", INF);
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            scanf("%d", &graph[i][j]);
+        }
+    }
+
+    // Perform Floyd-Warshall Algorithm
+    floydWarshall(graph, n);
+
+    return 0;
+}
